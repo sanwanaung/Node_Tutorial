@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const port = 3000;
 
-const users = [
+let users = [
   { name: "Rose's Fav Boi", email: "rosefavboi@gmail.com", age: 20 },
   { name: "San Wan Aung", email: "sanwanaung@gmail.com", age: 21 },
   { name: "Zaw Mun Aung", email: "zawmunaung@gmail.com", age: 22 },
@@ -45,6 +45,22 @@ const server = http.createServer((req, res) => {
       req.on("end", () => {
         const changeJsToObj = JSON.parse(newData);
         users.push(changeJsToObj);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.write(JSON.stringify(users));
+        return res.end();
+      });
+    } else if (method === "DELETE") {
+      let newData = "";
+      req.on("data", (chunk) => {
+        newData += chunk;
+      });
+      req.on("end", () => {
+        const changeJsToObj = JSON.parse(newData);
+        const checEmail = changeJsToObj.email;
+        let filterUser = users.filter((user) => {
+          return user.email !== checEmail;
+        });
+        users = filterUser;
         res.writeHead(200, { "Content-Type": "application/json" });
         res.write(JSON.stringify(users));
         return res.end();

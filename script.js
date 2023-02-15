@@ -28,6 +28,9 @@ const registerUser = async () => {
   const userName = document.querySelector("#userName").value;
   const userEmail = document.querySelector("#userEmail").value;
   const userAge = document.querySelector("#userAge").value;
+  if (!userName && !userEmail && !userAge) {
+    return;
+  }
   const newUser = { name: userName, email: userEmail, age: userAge };
   console.log(newUser);
   const response = await fetch(url, {
@@ -38,6 +41,19 @@ const registerUser = async () => {
   document.querySelector("#userName").value = "";
   document.querySelector("#userEmail").value = "";
   document.querySelector("#userAge").value = "";
+  app.innerHTML = "";
+  updateUI(data);
+};
+
+// Deleting User
+const deleteUser = async (event) => {
+  const userId = event.target.id;
+  const selectUserToDelete = { email: userId };
+  const response = await fetch(url, {
+    method: "DELETE",
+    body: JSON.stringify(selectUserToDelete),
+  });
+  const data = await response.json();
   app.innerHTML = "";
   updateUI(data);
 };
