@@ -33,9 +33,23 @@ const server = http.createServer((req, res) => {
       return res.end();
     });
   } else if (route === "/users") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.write(JSON.stringify(users));
-    return res.end();
+    if (method === "GET") {
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.write(JSON.stringify(users));
+      return res.end();
+    } else if (method === "POST") {
+      let newData = "";
+      req.on("data", (chunk) => {
+        newData += chunk;
+      });
+      req.on("end", () => {
+        const changeJsToObj = JSON.parse(newData);
+        users.push(changeJsToObj);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.write(JSON.stringify(users));
+        return res.end();
+      });
+    }
   } else {
     res.writeHead(200, { "Content-Type": "text/html" });
     res.write("Not Home Url");

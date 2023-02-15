@@ -23,6 +23,7 @@
             placeholder="Username"
             aria-label="Username"
             aria-describedby="addon-wrapping"
+            id="userName"
           />
         </div>
         <div class="input-group flex-nowrap">
@@ -32,6 +33,7 @@
             placeholder="Email"
             aria-label="Email"
             aria-describedby="addon-wrapping"
+            id="userEmail"
           />
         </div>
         <div class="input-group flex-nowrap">
@@ -41,9 +43,12 @@
             placeholder="Age"
             aria-label="Age"
             aria-describedby="addon-wrapping"
+            id="userAge"
           />
         </div>
-        <button type="button" class="btn btn-primary">Register</button>
+        <button type="button" class="btn btn-primary" onclick="registerUser()">
+          Register
+        </button>
       </div>
       <div class="app"></div>
     </div>
